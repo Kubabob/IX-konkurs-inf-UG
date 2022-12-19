@@ -1,10 +1,18 @@
-ilosc_zestawow = int(input())
+import metody
+import time
+
+start_time = time.time()
+
+#ilosc_zestawow = int(input())
+ilosc_zestawow = 1000000
 
 
 od_lewej = []
 od_prawej = []
 suma = 0
-wejscie = list(map(int, input().split()))
+#wejscie = list(map(int, input().split()))
+wejscie = list(map(int, metody.generator_losowych_liczb_w_rzedzie(1000000, -1000, 1000)))
+
 
 while True:
     if wejscie[0] < 0:
@@ -33,14 +41,19 @@ for liczba in wejscie[::-1]:
 
 od_prawej = od_prawej[::-1]
 
-zysk = od_prawej[1]
-index = 0
+try:
+    zysk = od_prawej[1]
+    index = 0
 
-for i in range(1,len(od_lewej)-1):
-    if od_lewej[i-1] + od_prawej[i+1] > zysk:
-        zysk = od_lewej[i-1] + od_prawej[i+1]
+    for i in range(1,len(od_lewej)-1):
+        if od_lewej[i-1] + od_prawej[i+1] > zysk:
+            zysk = od_lewej[i-1] + od_prawej[i+1]
+except IndexError:
+    zysk = od_prawej[0]
 
 print(zysk)
+
+print(f'{time.time()-start_time}s')
 
 
 
@@ -53,4 +66,7 @@ print(zysk)
 
 11 9 2 6 4 5
 2  9 5 7 6 11
+
+10
+-1 2 -2 3 -4 -5 7 10 -2 8
 """

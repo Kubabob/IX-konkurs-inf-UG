@@ -10,16 +10,17 @@ for zestaw in range(liczba_zestawow):
     ile = 0
     if wejscie_bin[0] == '0':
         suma = 0
+        ile+=1
     else:
         suma = 1
     for cyfra in wejscie_bin[1:]:
         if cyfra == '0':
-            suma *= 2
+            suma = reszta_z_5(suma) * 2
         else:
-            suma = 2*suma+1
+            suma = reszta_z_5(suma) * 2 + 1
         if reszta_z_5(suma) == 0:
-            ile+=1
+          ile+=1
     odp.append(ile)
 
 for odpowiedz in odp:
-    print(odpowiedz)
+    print(f'{odpowiedz}')

@@ -1,59 +1,66 @@
-import metody
-import time
 
-start_time = time.time()
 
-#ilosc_zestawow = int(input())
-ilosc_zestawow = 1000000
-
+ilosc_zestawow = int(input())
+flag = False
 
 od_lewej = []
 od_prawej = []
 suma = 0
-#wejscie = list(map(int, input().split()))
-wejscie = list(map(int, metody.generator_losowych_liczb_w_rzedzie(1000000, -1000, 1000)))
+wejscie = list(map(int, input().split()))
 
+if ilosc_zestawow > 1:
+  flag = True
 
 while True:
+  try:
     if wejscie[0] < 0:
         wejscie = wejscie[1:]
     elif wejscie[-1] < 0:
         wejscie = wejscie[:-1]
     else:
         break
+  except:
+    break
 
-for liczba in wejscie:
-    suma += liczba
-    if suma < 0:
-        od_lewej.append(0)
-        suma = 0
+if len(wejscie) == 0:
+  zysk = 0
+  
+else:
+  for liczba in wejscie:
+      suma += liczba
+      if suma < 0:
+          od_lewej.append(0)
+          suma = 0
+      else:
+          od_lewej.append(suma)
+  
+  suma = 0
+  for liczba in wejscie[::-1]:
+      suma += liczba
+      if suma < 0:
+          od_prawej.append(0)
+          suma = 0
+      else:
+          od_prawej.append(suma)
+  
+  od_prawej = od_prawej[::-1]
+  
+  try:
+      zysk = od_prawej[1]
+      index = 0
+  
+      for i in range(1,len(od_lewej)-1):
+          if od_lewej[i-1] + od_prawej[i+1] > zysk:
+              zysk = od_lewej[i-1] + od_prawej[i+1]
+  except:
+    if flag:
+      zysk = max(wejscie)
     else:
-        od_lewej.append(suma)
-
-suma = 0
-for liczba in wejscie[::-1]:
-    suma += liczba
-    if suma < 0:
-        od_prawej.append(0)
-        suma = 0
-    else:
-        od_prawej.append(suma)
-
-od_prawej = od_prawej[::-1]
-
-try:
-    zysk = od_prawej[1]
-    index = 0
-
-    for i in range(1,len(od_lewej)-1):
-        if od_lewej[i-1] + od_prawej[i+1] > zysk:
-            zysk = od_lewej[i-1] + od_prawej[i+1]
-except IndexError:
-    zysk = od_prawej[0]
+      zysk = 0
 
 print(zysk)
 
-print(f'{time.time()-start_time}s')
+
 
 
 
